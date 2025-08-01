@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - Matemática Colorida</title>
+    <title>Quiz Colorido - 5º Ano</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -48,8 +48,28 @@
         .btn-c { background: linear-gradient(45deg, #45b7d1, #96c93d); color: white; }
         .btn-d { background: linear-gradient(45deg, #f093fb, #f5576c); color: white; }
         
-        .correct { border-color: #28a745 !important; background: linear-gradient(45deg, #28a745, #20c997) !important; }
-        .incorrect { border-color: #dc3545 !important; background: linear-gradient(45deg, #dc3545, #fd7e14) !important; }
+        .correct { 
+            border-color: #28a745 !important; 
+            background: linear-gradient(45deg, #28a745, #20c997) !important;
+            animation: pulse-correct 0.6s ease-in-out;
+        }
+        .incorrect { 
+            border-color: #dc3545 !important; 
+            background: linear-gradient(45deg, #dc3545, #fd7e14) !important;
+            animation: shake 0.6s ease-in-out;
+        }
+        
+        @keyframes pulse-correct {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
         
         .score-badge {
             font-size: 1.5rem;
@@ -88,6 +108,32 @@
             border: 3px solid white;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
+        
+        .feedback-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            transform: translateX(300px);
+            transition: transform 0.3s ease;
+        }
+        
+        .feedback-correct {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .feedback-incorrect {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            color: white;
+        }
+        
+        .feedback-show {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
@@ -95,7 +141,7 @@
         <div class="quiz-container p-4">
             <div class="text-center mb-4">
                 <h1 class="header-title">
-                    <i class="fas fa-palette"></i> Quiz - Matemática Colorida <i class="fas fa-calculator"></i>
+                    <i class="fas fa-palette"></i> "Matemática Colorida" <i class="fas fa-calculator"></i>
                 </h1>
                 <p class="lead text-muted">Matemática e Teoria das Cores</p>
                 <div class="progress progress-custom mb-3">
@@ -109,12 +155,12 @@
                 <div class="card question-card question-math" data-question="1">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 1</h5>
-                        <p class="card-text fs-5">Quanto é 245 + 378?</p>
+                        <p class="card-text fs-5">Quanto é 25 + 38?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 523</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 623</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 723</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 613</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 53</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 63</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 73</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 61</button>
                         </div>
                     </div>
                 </div>
@@ -137,12 +183,12 @@
                 <div class="card question-card question-math d-none" data-question="3">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 3</h5>
-                        <p class="card-text fs-5">Quanto é 825 - 347?</p>
+                        <p class="card-text fs-5">Quanto é 75 - 29?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 478</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 488</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 578</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 468</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 46</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 56</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 44</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 54</button>
                         </div>
                     </div>
                 </div>
@@ -169,12 +215,12 @@
                 <div class="card question-card question-math d-none" data-question="5">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 5</h5>
-                        <p class="card-text fs-5">Se João tem 156 figurinhas e ganha mais 89, quantas figurinhas ele tem ao todo?</p>
+                        <p class="card-text fs-5">Se João tem 56 figurinhas e ganha mais 28, quantas figurinhas ele tem ao todo?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 235</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 245</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 255</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 265</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 74</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 84</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 64</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 94</button>
                         </div>
                     </div>
                 </div>
@@ -201,12 +247,12 @@
                 <div class="card question-card question-math d-none" data-question="7">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 7</h5>
-                        <p class="card-text fs-5">Maria tinha 420 reais e gastou 185 reais. Quanto sobrou?</p>
+                        <p class="card-text fs-5">Maria tinha 92 reais e gastou 47 reais. Quanto sobrou?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 235 reais</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 245 reais</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 225 reais</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 255 reais</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 45 reais</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 55 reais</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 35 reais</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 65 reais</button>
                         </div>
                     </div>
                 </div>
@@ -233,12 +279,12 @@
                 <div class="card question-card question-math d-none" data-question="9">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 9</h5>
-                        <p class="card-text fs-5">Quanto é 567 + 298?</p>
+                        <p class="card-text fs-5">Quanto é 67 + 28?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 865</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 855</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 875</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 845</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 95</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 85</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 105</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 75</button>
                         </div>
                     </div>
                 </div>
@@ -261,12 +307,12 @@
                 <div class="card question-card question-math d-none" data-question="11">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 11</h5>
-                        <p class="card-text fs-5">Quanto é 1000 - 456?</p>
+                        <p class="card-text fs-5">Quanto é 83 - 38?</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-answer btn-a" data-answer="a">a) 544</button>
-                            <button class="btn btn-answer btn-b" data-answer="b">b) 554</button>
-                            <button class="btn btn-answer btn-c" data-answer="c">c) 534</button>
-                            <button class="btn btn-answer btn-d" data-answer="d">d) 564</button>
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 45</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 55</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 35</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 65</button>
                         </div>
                     </div>
                 </div>
@@ -290,7 +336,7 @@
                     <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
                         <div class="card-body">
                             <h2><i class="fas fa-trophy text-warning"></i> Parabéns!</h2>
-                            <p class="fs-4">Você completou o quiz!</p>
+                            <p class="fs-4">Você mandou muito bem no quiz!</p>
                             <div class="score-badge" id="finalScore">0/12</div>
                             <p class="mt-3" id="finalMessage"></p>
                             <button class="btn btn-light btn-lg mt-3" onclick="restartQuiz()">
@@ -307,26 +353,103 @@
         </div>
     </div>
 
+    <!-- Feedback Message -->
+    <div id="feedbackMessage" class="feedback-message"></div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         const answers = {
-            1: 'b', // 245 + 378 = 623
+            1: 'b', // 25 + 38 = 63
             2: 'b', // Cores primárias: Vermelho, Amarelo e Azul
-            3: 'a', // 825 - 347 = 478
+            3: 'a', // 75 - 29 = 46
             4: 'b', // Amarelo + Azul = Verde
-            5: 'b', // 156 + 89 = 245
+            5: 'b', // 56 + 28 = 84
             6: 'c', // Vermelho + Amarelo = Laranja
-            7: 'a', // 420 - 185 = 235
+            7: 'a', // 92 - 47 = 45
             8: 'b', // Vermelho + Azul = Roxo
-            9: 'a', // 567 + 298 = 865
+            9: 'a', // 67 + 28 = 95
             10: 'a', // Cores secundárias: Verde, Laranja e Roxo
-            11: 'a', // 1000 - 456 = 544
+            11: 'a', // 83 - 38 = 45
             12: 'b' // Cores quentes: vermelho, laranja, amarelo
         };
 
         let currentQuestion = 1;
         let score = 0;
         let answered = {};
+
+        // Mensagens de feedback humanizadas para adolescentes
+        const correctMessages = [
+            "🎉 Arrasou! Você é demais!",
+            "🔥 Mandou bem! Tá voando!",
+            "⭐ Perfeito! Você é craque!",
+            "💪 Show de bola! Continue assim!",
+            "🚀 Incrível! Você tá on fire!",
+            "🎯 Acertou em cheio! Top demais!",
+            "✨ Sensacional! Você é fera!"
+        ];
+
+        const incorrectMessages = [
+            "😅 Relaxa! Na próxima você pega!",
+            "💙 Sem problema! Todo mundo erra às vezes!",
+            "🤗 Tranquilo! Você tá aprendendo!",
+            "😊 Partiu para a próxima! Você consegue!",
+            "💫 Não desiste! Você tá indo bem!",
+            "🌟 Tudo bem! O importante é tentar!",
+            "🎈 Sem stress! Vamos que vamos!"
+        ];
+
+        // Função para criar sons
+        function playSound(frequency, duration, type = 'sine') {
+            if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+                const audioContext = new (AudioContext || webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = type;
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }
+        }
+
+        function playCorrectSound() {
+            // Som de acerto - sequência ascendente alegre
+            playSound(523, 0.2); // C5
+            setTimeout(() => playSound(659, 0.2), 100); // E5
+            setTimeout(() => playSound(784, 0.3), 200); // G5
+        }
+
+        function playIncorrectSound() {
+            // Som de erro - sequência descendente suave
+            playSound(415, 0.3); // G#4
+            setTimeout(() => playSound(370, 0.4), 150); // F#4
+        }
+
+        function showFeedbackMessage(isCorrect) {
+            const feedbackDiv = document.getElementById('feedbackMessage');
+            const messages = isCorrect ? correctMessages : incorrectMessages;
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            
+            feedbackDiv.textContent = message;
+            feedbackDiv.className = `feedback-message ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            
+            // Mostrar mensagem
+            setTimeout(() => {
+                feedbackDiv.classList.add('feedback-show');
+            }, 100);
+            
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                feedbackDiv.classList.remove('feedback-show');
+            }, 3000);
+        }
 
         function updateProgress() {
             const progress = (currentQuestion - 1) / 12 * 100;
@@ -360,19 +483,22 @@
             const percentage = (score / 12) * 100;
             
             if (percentage >= 90) {
-                message = '🎉 Excelente! Você é um expert em matemática e cores!';
+                message = '🎉 Você é um gênio! Mandou muito bem mesmo!';
             } else if (percentage >= 70) {
-                message = '👏 Muito bom! Você tem um ótimo conhecimento!';
+                message = '🔥 Que show! Você tá voando alto, parabéns!';
             } else if (percentage >= 50) {
-                message = '😊 Bom trabalho! Continue estudando!';
+                message = '💪 Muito bom! Você tá no caminho certo, continue assim!';
             } else {
-                message = '💪 Continue praticando! Você vai melhorar!';
+                message = '🌟 Tranquilo! Todo mundo começa assim. Você vai melhorar muito!';
             }
             
             document.getElementById('finalMessage').textContent = message;
             
             // Atualizar barra de progresso para 100%
             document.getElementById('progressBar').style.width = '100%';
+            
+            // Som de finalização
+            setTimeout(() => playCorrectSound(), 500);
         }
 
         function restartQuiz() {
@@ -418,8 +544,12 @@
                 if (selectedAnswer === correctAnswer) {
                     e.target.classList.add('correct');
                     score++;
+                    playCorrectSound();
+                    showFeedbackMessage(true);
                 } else {
                     e.target.classList.add('incorrect');
+                    playIncorrectSound();
+                    showFeedbackMessage(false);
                     // Mostrar a resposta correta
                     buttons.forEach(btn => {
                         if (btn.dataset.answer === correctAnswer) {
@@ -430,7 +560,7 @@
                 
                 updateScore();
                 
-                // Próxima pergunta após 2 segundos
+                // Próxima pergunta após 3 segundos
                 setTimeout(() => {
                     if (currentQuestion < 12) {
                         currentQuestion++;
@@ -439,7 +569,7 @@
                     } else {
                         showFinalResult();
                     }
-                }, 2000);
+                }, 3000);
             }
         });
 
