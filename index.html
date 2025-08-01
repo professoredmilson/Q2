@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Matemática Colorida</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        
+        .question-card {
+            border-radius: 15px;
+            border: none;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .question-math { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .question-colors { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        
+        .btn-answer {
+            margin: 8px 0;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn-answer:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-a { background: linear-gradient(45deg, #ff6b6b, #ff8787); color: white; }
+        .btn-b { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
+        .btn-c { background: linear-gradient(45deg, #45b7d1, #96c93d); color: white; }
+        .btn-d { background: linear-gradient(45deg, #f093fb, #f5576c); color: white; }
+        
+        .correct { border-color: #28a745 !important; background: linear-gradient(45deg, #28a745, #20c997) !important; }
+        .incorrect { border-color: #dc3545 !important; background: linear-gradient(45deg, #dc3545, #fd7e14) !important; }
+        
+        .score-badge {
+            font-size: 1.5rem;
+            padding: 15px 25px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .progress-custom {
+            height: 25px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .progress-bar-custom {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 15px;
+        }
+        
+        .header-title {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+        
+        .color-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="quiz-container p-4">
+            <div class="text-center mb-4">
+                <h1 class="header-title">
+                    <i class="fas fa-palette"></i> Quiz - Matemática Colorida<i class="fas fa-calculator"></i>
+                </h1>
+                <p class="lead text-muted">Matemática e Teoria das Cores</p>
+                <div class="progress progress-custom mb-3">
+                    <div class="progress-bar progress-bar-custom" id="progressBar" style="width: 0%"></div>
+                </div>
+                <span id="questionCounter" class="badge bg-primary fs-6">Pergunta 1 de 12</span>
+            </div>
+
+            <div id="quizContent">
+                <!-- Pergunta 1 - Matemática -->
+                <div class="card question-card question-math" data-question="1">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 1</h5>
+                        <p class="card-text fs-5">Quanto é 245 + 378?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 523</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 623</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 723</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 613</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 2 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="2">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 2</h5>
+                        <p class="card-text fs-5">Quais são as cores primárias?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Vermelho, Verde e Azul</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Vermelho, Amarelo e Azul</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Verde, Amarelo e Roxo</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Azul, Verde e Laranja</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 3 - Matemática -->
+                <div class="card question-card question-math d-none" data-question="3">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 3</h5>
+                        <p class="card-text fs-5">Quanto é 825 - 347?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 478</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 488</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 578</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 468</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 4 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 4</h5>
+                        <p class="card-text fs-5">Que cor você obtém misturando amarelo e azul?</p>
+                        <div class="text-center mb-3">
+                            <span class="color-circle" style="background-color: yellow;"></span> + 
+                            <span class="color-circle" style="background-color: blue;"></span> = ?
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Roxo</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Verde</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Laranja</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Rosa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 5 - Matemática -->
+                <div class="card question-card question-math d-none" data-question="5">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 5</h5>
+                        <p class="card-text fs-5">Se João tem 156 figurinhas e ganha mais 89, quantas figurinhas ele tem ao todo?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 235</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 245</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 255</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 265</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 6 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="6">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 6</h5>
+                        <p class="card-text fs-5">Que cor você obtém misturando vermelho e amarelo?</p>
+                        <div class="text-center mb-3">
+                            <span class="color-circle" style="background-color: red;"></span> + 
+                            <span class="color-circle" style="background-color: yellow;"></span> = ?
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Verde</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Roxo</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Laranja</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Rosa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 7 - Matemática -->
+                <div class="card question-card question-math d-none" data-question="7">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 7</h5>
+                        <p class="card-text fs-5">Maria tinha 420 reais e gastou 185 reais. Quanto sobrou?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 235 reais</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 245 reais</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 225 reais</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 255 reais</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 8 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="8">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 8</h5>
+                        <p class="card-text fs-5">Que cor você obtém misturando vermelho e azul?</p>
+                        <div class="text-center mb-3">
+                            <span class="color-circle" style="background-color: red;"></span> + 
+                            <span class="color-circle" style="background-color: blue;"></span> = ?
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Verde</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Roxo</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Laranja</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Marrom</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 9 - Matemática -->
+                <div class="card question-card question-math d-none" data-question="9">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-plus text-primary"></i> Pergunta 9</h5>
+                        <p class="card-text fs-5">Quanto é 567 + 298?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 865</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 855</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 875</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 845</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 10 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="10">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 10</h5>
+                        <p class="card-text fs-5">Quais são as cores secundárias?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Verde, Laranja e Roxo</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Vermelho, Amarelo e Azul</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Rosa, Marrom e Cinza</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Branco, Preto e Cinza</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 11 - Matemática -->
+                <div class="card question-card question-math d-none" data-question="11">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-minus text-danger"></i> Pergunta 11</h5>
+                        <p class="card-text fs-5">Quanto é 1000 - 456?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) 544</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) 554</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) 534</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) 564</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta 12 - Cores -->
+                <div class="card question-card question-colors d-none" data-question="12">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-palette text-success"></i> Pergunta 12</h5>
+                        <p class="card-text fs-5">O que são cores quentes?</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-answer btn-a" data-answer="a">a) Cores que lembram o frio: azul, verde, roxo</button>
+                            <button class="btn btn-answer btn-b" data-answer="b">b) Cores que lembram o calor: vermelho, laranja, amarelo</button>
+                            <button class="btn btn-answer btn-c" data-answer="c">c) Apenas a cor vermelha</button>
+                            <button class="btn btn-answer btn-d" data-answer="d">d) Cores escuras como preto e marrom</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultado Final -->
+                <div id="finalResult" class="text-center d-none">
+                    <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <div class="card-body">
+                            <h2><i class="fas fa-trophy text-warning"></i> Parabéns!</h2>
+                            <p class="fs-4">Você completou o quiz!</p>
+                            <div class="score-badge" id="finalScore">0/12</div>
+                            <p class="mt-3" id="finalMessage"></p>
+                            <button class="btn btn-light btn-lg mt-3" onclick="restartQuiz()">
+                                <i class="fas fa-redo"></i> Fazer Quiz Novamente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4" id="scoreDisplay">
+                <span class="badge score-badge">Pontuação: <span id="currentScore">0</span>/12</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const answers = {
+            1: 'b', // 245 + 378 = 623
+            2: 'b', // Cores primárias: Vermelho, Amarelo e Azul
+            3: 'a', // 825 - 347 = 478
+            4: 'b', // Amarelo + Azul = Verde
+            5: 'b', // 156 + 89 = 245
+            6: 'c', // Vermelho + Amarelo = Laranja
+            7: 'a', // 420 - 185 = 235
+            8: 'b', // Vermelho + Azul = Roxo
+            9: 'a', // 567 + 298 = 865
+            10: 'a', // Cores secundárias: Verde, Laranja e Roxo
+            11: 'a', // 1000 - 456 = 544
+            12: 'b' // Cores quentes: vermelho, laranja, amarelo
+        };
+
+        let currentQuestion = 1;
+        let score = 0;
+        let answered = {};
+
+        function updateProgress() {
+            const progress = (currentQuestion - 1) / 12 * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('questionCounter').textContent = `Pergunta ${currentQuestion} de 12`;
+        }
+
+        function showQuestion(questionNum) {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.add('d-none');
+            });
+            
+            const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
+            if (questionCard) {
+                questionCard.classList.remove('d-none');
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('currentScore').textContent = score;
+        }
+
+        function showFinalResult() {
+            document.getElementById('quizContent').classList.add('d-none');
+            document.getElementById('scoreDisplay').classList.add('d-none');
+            document.getElementById('finalResult').classList.remove('d-none');
+            
+            document.getElementById('finalScore').textContent = `${score}/12`;
+            
+            let message = '';
+            const percentage = (score / 12) * 100;
+            
+            if (percentage >= 90) {
+                message = '🎉 Excelente! Você é um expert em matemática e cores!';
+            } else if (percentage >= 70) {
+                message = '👏 Muito bom! Você tem um ótimo conhecimento!';
+            } else if (percentage >= 50) {
+                message = '😊 Bom trabalho! Continue estudando!';
+            } else {
+                message = '💪 Continue praticando! Você vai melhorar!';
+            }
+            
+            document.getElementById('finalMessage').textContent = message;
+            
+            // Atualizar barra de progresso para 100%
+            document.getElementById('progressBar').style.width = '100%';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            score = 0;
+            answered = {};
+            
+            // Remover classes de resposta
+            document.querySelectorAll('.btn-answer').forEach(btn => {
+                btn.classList.remove('correct', 'incorrect');
+                btn.disabled = false;
+            });
+            
+            // Mostrar elementos do quiz
+            document.getElementById('quizContent').classList.remove('d-none');
+            document.getElementById('scoreDisplay').classList.remove('d-none');
+            document.getElementById('finalResult').classList.add('d-none');
+            
+            // Atualizar displays
+            updateProgress();
+            updateScore();
+            showQuestion(1);
+        }
+
+        // Event listeners para as respostas
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-answer')) {
+                const questionNum = parseInt(e.target.closest('.question-card').dataset.question);
+                const selectedAnswer = e.target.dataset.answer;
+                const correctAnswer = answers[questionNum];
+                
+                // Verificar se já foi respondida
+                if (answered[questionNum]) return;
+                
+                answered[questionNum] = true;
+                
+                // Desabilitar todos os botões desta pergunta
+                const questionCard = e.target.closest('.question-card');
+                const buttons = questionCard.querySelectorAll('.btn-answer');
+                buttons.forEach(btn => btn.disabled = true);
+                
+                // Marcar resposta correta e incorreta
+                if (selectedAnswer === correctAnswer) {
+                    e.target.classList.add('correct');
+                    score++;
+                } else {
+                    e.target.classList.add('incorrect');
+                    // Mostrar a resposta correta
+                    buttons.forEach(btn => {
+                        if (btn.dataset.answer === correctAnswer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+                
+                updateScore();
+                
+                // Próxima pergunta após 2 segundos
+                setTimeout(() => {
+                    if (currentQuestion < 12) {
+                        currentQuestion++;
+                        updateProgress();
+                        showQuestion(currentQuestion);
+                    } else {
+                        showFinalResult();
+                    }
+                }, 2000);
+            }
+        });
+
+        // Inicializar quiz
+        updateProgress();
+        updateScore();
+        showQuestion(1);
+    </script>
+</body>
+</html>
